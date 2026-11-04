@@ -112,7 +112,7 @@ for score, chunk in result["reranked"]:
 
 ```
 pipeline.py         全链路，可直接运行
-tutorial.ipynb      跟教程手敲的原始记录，按步骤分成 9 格
+tutorial.ipynb      跟教程手敲的原始记录，逐格对应教程步骤
 doc.md              示例语料（一篇约 3000 字的短篇，一行一段）
 pyproject.toml      依赖声明
 uv.lock             依赖版本锁定
