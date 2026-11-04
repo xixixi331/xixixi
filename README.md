@@ -4,6 +4,8 @@
 
 输入一篇文档，就能针对它提问；文档里没有的内容，系统会明确拒答，而不是编一个答案。
 
+> 想一步步跟着走：看 [`tutorial.ipynb`](./tutorial.ipynb)。想直接跑起来：看 [`pipeline.py`](./pipeline.py)。
+
 ```
 问题：安子的爸爸是谁
 召回   0.595  和安子一样工作的还有她的父亲…因为姓马，大家喜欢叫他老马
@@ -110,11 +112,25 @@ for score, chunk in result["reranked"]:
 
 ```
 pipeline.py         全链路，可直接运行
+tutorial.ipynb      跟教程手敲的原始记录，按步骤分成 9 格
 doc.md              示例语料（一篇约 3000 字的短篇，一行一段）
 pyproject.toml      依赖声明
 uv.lock             依赖版本锁定
 .env.example        配置模板
 ```
+
+## 从教程版到工程版
+
+`tutorial.ipynb` 是跟着教程一步步敲下来的过程，`pipeline.py` 是在它基础上改出来的可运行版本。四处关键改动：
+
+| 教程版 | 问题 | 工程版 |
+| --- | --- | --- |
+| `EphemeralClient()` | 数据只在内存，进程退出即丢 | `PersistentClient(path="./chroma_db")` 落盘 |
+| `[embed_chunk(c) for c in chunks]` | 逐条编码，36 块编码 36 次 | `encode(chunks, ...)` 一次批量，快一个数量级 |
+| 重排只取排序结果 | 分数没打出来，正负号的信息浪费了 | 打印分数，用 `score >= 0` 做相关性门槛 |
+| 检索到什么就喂什么 | 无关问题也会硬答 | 全为负则不调模型，直接返回拒答 |
+
+notebook 里保留了教程当时的写法（`retreive` 的拼写、`print(f"[{i} {chunks}\n]")` 打印整个 `chunks`），没有回头美化——它是过程记录，不是成品代码。
 
 ## 实测性能
 
