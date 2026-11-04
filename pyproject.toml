@@ -1,0 +1,12 @@
+[project]
+name = "rag"
+version = "0.1.0"
+description = "不依赖 LangChain 的手写 RAG：切块、向量化、召回、重排、生成"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "chromadb>=1.5.9",
+    "openai>=3.42.1",
+    "python-dotenv>=1.2.4",
+    "sentence-transformers>=6.2.0",
+]

@@ -1,0 +1,6 @@
+# 供不用 uv 的场合使用：pip install -r requirements.txt
+# uv 用户直接 uv sync 即可，版本由 uv.lock 锁定
+chromadb>=1.5.9
+openai>=3.42.1
+python-dotenv>=1.2.4
+sentence-transformers>=6.2.0
